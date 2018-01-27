@@ -1,0 +1,14 @@
+def fetch_spreadsheet_data()
+    google_user = "MY EMAIL ADDRESS"
+    google_password = "MY PASSWORD"
+
+    workbook = Roo::Google.new("https://docs.google.com/spreadsheets/d/18laRL_ySBLN-ZazO9EDbIg82Zo5H2QQl4aweXiK5u9w/edit#gid=0",user: google_user, password: google_password)
+    s = workbook.sheets[0] # assuming first sheet in workbook
+    send_event('cat', {current: s.cell('B',2) })
+    send_event('bounce_back', {current: s.cell('B',3) )
+end
+
+
+SCHEDULER.every '5m' do
+    fetch_spreadsheet_data()
+end
